@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title></title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    form{
+        width:500px;
+        margin:50px auto;
+    }
+    ul.list-group{
+        margin-top:20px;
+    }
+    ul.list-group li{
+        margin-bottom:4px;
+    }
+</style>
+<form  method="post" action="/upload" enctype="multipart/form-data">
+    <!--enctype="multipart/form-data"传文件的所有字节，否则只会传名称信息-->
+    <div class="form-group">
+        <label for="exampleInputFile">Upload File</label>
+        <input type="file" name="file" id="exampleInputFile" style="width:67%;border:1px solid #ccc">
+        <button type="button" class="btn btn-default" id="submit">Submit</button>
+    </div>
+    <ul class="list-group">
+        <% for(var i=0; i< files.length; i++) {%>
+        <li class="list-group-item list-group-item-warning">
+            <a href="/<%= files[i] %>">
+                <%= files[i] %>
+            </a>
+        </li>
+        <% } %>
+        <!--<li >Dapibus ac facilisis in</li>-->
+    </ul>
+    <button type="submit" style="opacity: 0" id="submit_replace">隐藏按钮</button>
+</form>
+</body>
+</html>
+<script>
+    //点击提交按钮时需判断是否为空
+    //思路：因为发name数据的原因，用隐藏按钮替换提交按钮，不为空是触发，否则不触发
+    var submit=document.querySelector("#submit")
+    var submit_replace=document.querySelector("#submit_replace")
+    var input=document.querySelector("input[name=file]")
+    submit.onclick=function(){
+        if(!input.value==""){
+//            console.log(input.value) //C:\fakepath\note.js
+            submit_replace.click()
+//            location.href="/upload"//不能，因为这是get方式的，并且在这里name发不过去
+        }
+    }
+
+</script>
